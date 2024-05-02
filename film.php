@@ -6,7 +6,7 @@ require_once('pdo.php');
 if (isset($_GET['idFilm'])) {
     $id = $_GET['idFilm'];
     $res = $dbPDO->prepare("
-    SELECT titre, Genre.libelle as genre, Realisateur.prenom as prenom, Realisateur.nom as nom, dateDeSortie, description, duree FROM Film
+    SELECT titre, Genre.libelle as genre, Realisateur.prenom as prenom, Realisateur.nom as nom, dateDeSortie, description, duree, Realisateur.id as idRealisateur FROM Film
     INNER JOIN Genre ON Film.id_genre = Genre.id
     INNER JOIN Realisateur ON Film.id_realisateur = Realisateur.id
     WHERE Film.id = :id
@@ -28,13 +28,21 @@ if (isset($_GET['idFilm'])) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jersey+15&display=swap');
+        h1 {
+            font-family: "Jersey 15", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
     <title><?=$film->titre?></title>
 </head>
 <body>
 <h1><?=$film->titre?> :</h1>
 
 <p><?=strftime("%d %B %Y", strtotime($film->dateDeSortie))?> | <?=$heures.'h '.$minutes.'min'?> | <?=$film->genre?></p>
-<p>De <a href="*"><?=$film->prenom .' '. $film->nom?></a></p>
+<p>De <a href="fillmmaker.php?idRealisateur=<?=$film->idRealisateur?>"><?=$film->prenom .' '. $film->nom?></a></p>
 <p><strong>Synopsis : </strong><?=$film->description?></p>
 </body>
 </html>
