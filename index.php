@@ -42,5 +42,8 @@ require_once('pdo.php');
         }
     ?>
 </ul>
+<a href="login.php">
+    <button>Login</button>
+</a>
 </body>
 </html>
