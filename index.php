@@ -12,7 +12,7 @@ require_once('pdo.php');
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jersey+15&display=swap');
-        * {
+        h1 {
             font-family: "Jersey 15", sans-serif;
             font-weight: 400;
             font-style: normal;
@@ -23,7 +23,7 @@ require_once('pdo.php');
 <body>
 <?php
     $res = $dbPDO->prepare("
-    SELECT titre, Genre.libelle as genre, Realisateur.prenom as prenom, Realisateur.nom as nom, YEAR(dateDeSortie) as dateDeSortie FROM Film
+    SELECT Film.id as id, titre, Genre.libelle as genre, Realisateur.prenom as prenom, Realisateur.nom as nom, YEAR(dateDeSortie) as dateDeSortie FROM Film
     INNER JOIN Genre ON Film.id_genre = Genre.id
     INNER JOIN Realisateur ON Film.id_realisateur = Realisateur.id
     WHERE dateDeSortie BETWEEN '2010-01-01' AND '2019-12-31'
@@ -36,7 +36,7 @@ require_once('pdo.php');
         foreach ($res->fetchAll(PDO::FETCH_CLASS) as $film) {
             echo "
             <li>
-            <a href='*'>$film->titre</a> ($film->genre de $film->prenom $film->nom, $film->dateDeSortie)
+            <a href='film.php?idFilm=$film->id'>$film->titre</a> ($film->genre de $film->prenom $film->nom, $film->dateDeSortie)
             </li>
             ";
         }
